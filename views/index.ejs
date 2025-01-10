@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index</title>
+</head>
+<body>
+  <div>
+    <button id="next">Next Page</button>
+  </div>
+
+  <div id="pageshow-status">
+    pageshow:
+  </div>
+  <div id="pageshow">
+    pageshow:
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div id="popstate-status">
+    popstate:
+  </div>
+  <div id="popstate">
+    popstate:
+  </div>
+
+  <script>
+    let pageshowStatus = '-'
+    let isPageShow = '-'
+    window.addEventListener('pageshow', () => {
+      pageshowStatus = '-'
+      isPageShow = event.persisted
+      render()
+    })
+
+    let popstateStatus = '-'
+    let isPopstate = '-'
+    window.addEventListener('popstate', () => {
+      popstateStatus = '-'
+      isPopstate = window.performance.navigation.type
+      render()
+    })
+
+    document.querySelector('#next').addEventListener('click', () => {
+      pageshowStatus = 'loading'
+      popstateStatus = 'loading'
+      render()
+      setTimeout(() => {
+        location.href = '/back'
+      }, 1000)
+    })
+
+    function render() {
+      document.querySelector('#pageshow-status').innerHTML = `pageshow status: ${pageshowStatus}`
+      document.querySelector('#pageshow').innerHTML = `pageshow: ${isPageShow}`
+      document.querySelector('#popstate-status').innerHTML = `popstate status: ${popstateStatus}`
+      document.querySelector('#popstate').innerHTML = `popstate: ${isPopstate}`
+    }
+  </script>
+</body>
+</html>
